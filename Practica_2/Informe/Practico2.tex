@@ -1,0 +1,202 @@
+\documentclass[spanish, 12pt, a4paper]{article}
+
+\usepackage{name}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+\setcounter{page}{1}
+\maketitle
+\begin{multicols}{2}
+
+\section{Distribución binomial}
+Consideramos una población de individuos que no se reproducen y evolucionan en tiempo discreto. 
+En cada paso de tiempo, cada individuo puede morir con una probabilidad $d$.
+
+Realizamos simulaciones con diferentes probabilidades de muerte, $d = { 0.1,~0.5,~0.9 }$, 
+utilizando una población inicial de $N_0 = 100$ individuos y un tiempo de simulación $t_f = 10$. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../Ejercicio1/EvolucionProb_0.1.pdf}
+    \caption{Evolución tempoal del histograma de la población con probabilidad de muerte $d = 0.1$.}
+    \label{fig:binomial1}
+\end{figure}
+
+Se llevaron a cabo 1000 simulaciones para cada valor de $d$, lo que nos permite realizar análisis 
+estadísticos en cada paso de tiempo. 
+Las Figuras \ref{fig:binomial1}, \ref{fig:binomial2} y \ref{fig:binomial3} 
+muestran los histogramas de la población en diferentes momentos del tiempo, 
+comparados con la distribución binomial.
+
+Se puede observar que rápidamente los histogramas adquieren la forma de una distribución binomial exacta y que la media se 
+estabiliza en el valor esperado $d N_0$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{../Ejercicio1/EvolucionProb_0.5.pdf}
+    \caption{Evolución temporal del histograma de la población con probabilidad de muerte $d = 0.5$.}
+    \label{fig:binomial2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{../Ejercicio1/EvolucionProb_0.9.pdf}
+    \caption{Evolución temporal del histograma de la población con probabilidad de muerte $d = 0.9$.}
+    \label{fig:binomial3}
+\end{figure}
+
+\section{Ecuaciones de Langevin}
+Consideramos una población continua \( x(t) \), con una dinámica multiplicativa en tiempo discreto y además le añadimos un ruido aditivo. La ecuación de Langevin que describe la evolución de la población es:
+
+\begin{equation}
+    x(t+1) = a x(t) + z(t),
+\end{equation}
+
+donde la variable estocástica \( z(t) \) tiene una distribución gaussiana con media cero y desviación estándar \( \sigma \).
+
+Simulamos doce trayectorias del sistema con la condición inicial $x(0) = 1$, utilizando $a = 1.05$ y $\sigma = 0.2$, hasta un tiempo final $t_f = 50$. 
+
+En la Figura \ref{fig:langevinaditivo} se muestran las trayectorias simuladas. 
+Se observa que las trayectorias con ruido aditivo presentan fluctuaciones alrededor de la dinámica esperada sin ruido. 
+Algunas de las trayectorias logran alejarse de la esperada sin ruido debido a que el ruido afecta de manera significativa a la población 
+cuando esta es pequeña, provocando su desviación de la dinámica determinista.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Ejercicio2/LangevinAditivo.pdf}
+    \caption{Trayectorias simuladas de la ecuación de Langevin con ruido aditivo. Las trayectorias con círculos rellenos en negro representan la dinámica exponencial sin ruido.}
+    \label{fig:langevinaditivo}
+\end{figure}
+
+Se graficó (ver Figura \ref{fig:HistogramaAditivo}) la evolución de la distribución de probabilidad de las trayectorias $P(x,t)$. 
+Se observa que a medida que aumenta el tiempo, la distribución presenta una mayor varianza. 
+También se puede ver que, una parte de las simulaciones la población se extingue, lo que se refleja en un pequeño pico en 0.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Ejercicio2/HistogramaAditivo.pdf}
+    \caption{Evolución de la distribución de probabilidad $P(x,t)$ para la dinámica multiplicativa en tiempo discreto con un ruido gaussiano de media 0 y $\sigma = 0.2$.}
+    \label{fig:HistogramaAditivo}
+\end{figure}
+
+Este análisis se puede realizar para la misma población, esta vez agregando un ruido multiplicativo. 
+De esta forma, la dinámica se describe mediante la ecuación
+
+\begin{equation}
+    x(t + 1) = a x(t) + z(t) x(t),
+\end{equation}
+
+donde lo único que cambiamos es que el ruido ahora está multiplicado por la población en el tiempo $t$. 
+En la Figura \ref{fig:langevinmultiplicativo} se pueden observar las doce de trayectorias simuladas para este caso. 
+Se aprecia que las trayectorias con ruido multiplicativo tienden a modificar bruscamente la dinámica debido a que el ruido 
+se amplifica con el tamaño de la población.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Ejercicio2/LangevinMultiplicativo.pdf}
+    \caption{Trayectorias simuladas de la ecuación de Langevin con ruido multiplicativo.
+    Los circulos rellenos negros muestran la dinámica exponencial sin ruido.}
+    \label{fig:langevinmultiplicativo}
+\end{figure}
+
+
+Se graficó además la distribución de probabilidad $P_m(x,t)$ de esta población. 
+Esta se muestra en la Figura \ref{fig:HistogramaMultiplicativo}. 
+Se observa que la variación es aún mayor y ocurre rápidamente al avanzar en el tiempo $t$. 
+También se encuentra el pico en 0 correspondiente a las poblaciones que se extinguen debido a las fluctuaciones
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Ejercicio2/HistogramaMultiplicativo.pdf}
+    \caption{Evolución de la distribución de probabilidad $P_m(x,t)$ para la dinámica multiplicativa con un ruido multiplicativo
+    gaussiano de meida 0 y $\sigma = 0.2$.}
+    \label{fig:HistogramaMultiplicativo}
+\end{figure}
+Como conclusión, ambos pueden ser casos posibles dentro de una población de individuos. 
+Por lo tanto, la decisión de qué modelo utilizar queda sujeta a las observaciones de datos de la realidad.
+
+\section{Simulación estocástica}
+Consideramos un sistema con reproducción y competencia intraespecífica del tipo:
+
+\begin{align*} 
+    A & \xrightarrow{b} A+A \\ 
+    A+A & \xrightarrow{d} A,
+\end{align*}
+donde $A$ representa una población con nacimientos a una tasa $b$ y muertes por competencia a una tasa $d$.
+Simulamos el sistema utilizando el algorítmo de Guillespie analizando los distintos casos de las tasas
+de nacimiento y muerte.
+
+En primer lugar exploramos las dinámicas del sistema comparadas con las soluciones de la ecuación macroscópica
+dada por la ecuación logistica
+
+\begin{equation}
+    \frac{dA}{dt} = bA\left(1-\frac{A}{b/d}\right)
+\end{equation}
+
+donde $b/d$ es la capacidad de carga del sistema y $b$ es la tasa de crecimiento de la población.
+
+Veamos distintos casos según la población incial $A_0$:
+\begin{enumerate}
+    \item Para $A_0$ pequeño por debajo de $\frac{b/d}{2}$ la población crece como una curva cóncava
+    \item Para $A_0$ grande por encima de $\frac{b/d}{2}$ y menor a $b/d$ la población crece como una curva convexa
+    \item Para $A_0$ mayor a $b/d$ la población decrece hasta llegar a la capacidad de carga del sistema
+\end{enumerate}
+
+En primer lugar tomamos las tasas $b = 1$, $d = 0.01$, entonces la capacidad de carga del sistema macroscópico es $b/d = 100$.
+En la figura \ref{fig:EstacionarioComparacion} se puede observar que en el estado estacionario 
+la solución dada por el algoritmo de Guillespie tiene fluctuaciones alrededor de la solución dada por la ecuación logística.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Ejercicio3/EstacionarioComparacion.pdf}
+    \caption{Comparación de la solución estacionaria del algoritmo de Guillespie con la solución de la ecuación logística.}
+    \label{fig:EstacionarioComparacion}
+\end{figure}
+
+Estudiamos además los estados transitorios para distintos valores de $b$ y $d$, las simulaciones realizadas se muestran en 
+la Figura \ref{fig:Comparacion2}. Se observa un comportamiento similar al caso estacionario, 
+donde la solución del algoritmo de Guillespie fluctúa alrededor de la solución de la ecuación logística.
+El cambio en las tasas de nacimiento y muerte afecta la velocidad de convergencia al estado estacionario, ya que cambia
+el valor de la capacidad de carga del sistema.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Ejercicio3/Comparacion2.pdf}
+    \caption{Comparación
+    de la solución en el transitorio del algoritmo de Guillespie con la solución de la ecuación logística.}
+    \label{fig:Comparacion2}
+\end{figure}
+
+Se analizó el histograma de la población en el estado estacionario para distintos valores de $b$ y $d$. 
+En primer lugar se tomaron los valores $b = 0.1$ y $d = 0.001$, donde la capacidad de carga del sistema es $b/d = 100$.
+Simulando 1000 evoluciones del sistema, se obtuvo el histograma de la población en el estado estacionario, el cual se muestra
+en la figura \ref{fig:EstacionarioPositivoHistograma},
+se observa que la población se encuentra en torno a la capacidad de carga del sistema con una distribución gaussiana con media $99.4$ (coincidente con la capacidad de carga del sistema) y
+desviación estándar $9.97$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Ejercicio3/EstacionarioPositivoHistograma.pdf}
+    \caption{Histograma de la población en el estado estacionario para $b = 0.1$ y $d = 0.001$.}
+    \label{fig:EstacionarioPositivoHistograma}
+\end{figure}
+
+Además se analizaron los tiempos de extinción de la población para un valor de $b = 0.1$ y $d = 0.02$. Se realizaron
+1000 simulaciones y se obtuvo el histograma de los tiempos de extinción de la población, el cual se muestra en la figura
+\ref{fig:EstacionarioNegativoHistograma}. Se observa que la población se extingue en un tiempo finito con una media 
+aproximada de $8.64$ pasos de tiempo y una desviación estándar de $6.06$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Ejercicio3/EstacionarioNegativoHistograma.pdf}
+    \caption{Histograma de los tiempos de extinción de la población para $b = 0.1$ y $d = 0.02$.}
+    \label{fig:EstacionarioNegativoHistograma}
+\end{figure}
+
+
+\end{multicols}
+\end{document}

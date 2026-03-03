@@ -1,0 +1,299 @@
+\documentclass[spanish, 12pt, a4paper]{article}
+
+\usepackage{name}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+\setcounter{page}{1}
+\maketitle
+\begin{multicols}{2}
+
+\section{Sistema SIRS}
+
+Consideramos un sistema de susceptibles-infectados-recuperados con pérdida de la inmunidad. Escribimos las ecuaciones
+en la dinámica de campo medio suponiendo que el contagio ocurre con tasa $\beta$, que la duración media de la infección 
+es $\tau_I$ y que la de pérdida de inmunidad es $\tau_R$.
+
+\begin{align}
+    \dot{s} &= -\beta s i + \frac{r}{\tau_R} r \\
+    \dot{i} &= \beta s i - \frac{i}{\tau_I} \\
+    \dot{r} &= \frac{i}{\tau_I} - \frac{r}{\tau_R},
+\end{align}
+
+donde $s$, $i$ y $r$ son las fracciones de susceptibles, infectados y recuperados, respectivamente.
+Si suponemos que el sistema se encuentra en equilibrio, entonces $\dot{s} = \dot{i} = \dot{r} = 0$.
+De la ecuación (3) obtenemos que $i^{*} = r^{*} \frac{\tau_I}{\tau_R}$, sustituyendo en la ecuación (1) obtenemos
+$s^{*} = \frac{1}{\beta \tau_I}$
+
+Queremos analizar las oscilaciones para en este sistema SIRS. Para esto consideramos que la población se mantiene constante,
+es decir $s + i + r = 1$. Entonces, podemos reescribir las ecuaciones (1) y (2) como
+\begin{align*}
+    \dot{s} &= -\beta s i + \frac{1}{\tau_R} \left(1 - i - s\right) \\
+    \dot{i} &= \beta s i - \frac{i}{\tau_I}.
+\end{align*}
+
+Para analizar las oscilaciones, linealizamos el sistema en torno al punto fijo $(s^{*}, i^{*})$.
+
+El jacobiano del sistema nos da
+
+\begin{equation*}
+    J = \begin{pmatrix}
+        -\beta i - \frac{1}{\tau_R} & -\beta s - \frac{1}{\tau_R} \\
+        \beta i & \beta s - \frac{1}{\tau_I}
+    \end{pmatrix},
+\end{equation*}
+
+evaluando en el punto fijo obtenemos
+
+\begin{equation*}
+    J|_{(s^{*}, i^{*})} = \begin{pmatrix}
+       \frac{-\beta \tau_I + 1}{\tau_I + \tau_R} - \frac{1}{\tau_R} & - \frac{1}{\tau_I} - \frac{1}{\tau_R} \\
+        \frac{\beta \tau_I - 1}{\tau_I + \tau_R} & 0
+    \end{pmatrix}.
+\end{equation*}
+
+De esta extraemos la traza y el determinante de la matriz para analizar la estabilidad del punto fijo.
+
+\begin{align*}
+    \text{Tr} J &= \frac{- \tau_I \left(\beta \tau_R + 1\right)}{\tau_R \left(\tau_I + \tau_R\right)} \\
+    \text{Det} J &= \frac{\beta \tau_I - 1}{\tau_I \tau_R}.
+\end{align*}
+
+Como $\text{Tr} J < 0$, si hay oscilaciones en el sistema serán siempre amortiguadas para este equilibrio.
+El caso en que hay oscilaciones es cuando $\left(\text{Tr} J\right)^2 < 4 \text{Det} J$, es decir 
+\begin{equation*}
+    \left(\frac{\tau_I}{\tau_R}\right)^2 \left(\frac{\beta \tau_R + 1}{\tau_I + \tau_R}\right)^2 < 4 \frac{\beta \tau_I - 1}{\tau_I \tau_R}.
+\end{equation*} 
+
+Fijando los valores en $\tau_I = 5$, $\beta = 0.5$ y $\tau_R = 50$, la condición anterior se 
+cumple, observamos una simulación del sistema con estos valores donde ocurren oscilaciones amortiguadas en la figura \ref{fig:sirs}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../Ejercicio1/sirs.pdf}
+    \caption{Simulación del sistema SIRS en la que se observan oscilaciones amortiguadas.}
+    \label{fig:sirs}
+\end{figure}
+
+\section{Glucólisis}
+La glucólisis es un proceso metabólico fundamental de los seres vivos,
+mediante el cual obtienen energía descomponiendo azúcar. Un modelo
+matemático de una de las reacciones involucradas es el siguiente:
+
+\begin{align}
+    \dot{x} &= -x + ay + x^2 y = f(x,y)\\
+    \dot{y} &= \frac{1}{2} - ay - x^2 y = g(x,y),
+\end{align}
+
+donde $x(t)$ es la concentración de ADP, $y(t)$ es la de la glucosa-6-fosfato
+y $a \geq 0$ es un parámetro de la cinética química. Busquemos el único equilibrio del sistema,
+para esto igualamos las ecuaciones a cero y resolvemos el sistema de ecuaciones no lineales, de donde obtenemos
+
+\begin{align*}
+    x^{*} &= \frac{1}{2} \\
+    y^{*} &= \frac{1}{1 + 4a}.
+\end{align*}
+
+Una forma de verificar que este equilibrio es único es anaizando las nulclinas del sistema:
+
+\begin{align*}
+    \dot{x} = 0 &\Rightarrow y = \frac{x}{x^2 + a}\\
+    \dot{y} = 0 &\Rightarrow y = \frac{1}{2\left(x^2 + a\right)},
+\end{align*}
+
+un gráfico de las mismas se muestra en la figura \ref{fig:nulclinas}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{../Ejercicio2/IntersectNulclinas.pdf}
+    \caption{Gráfico de las nulclinas del sistema.}
+    \label{fig:nulclinas}
+\end{figure}
+
+Dado que el variar $a$ afecta de la misma manera a las dos nulclinas, solo hay un punto de intersección.
+
+Tomemos $a = 0.5$ y analicemos las regiones donde $f > 0, f < 0, g > 0, g < 0$. Para esto graficamos en el diagrama de fases
+las nulclinas y analizamos el signo de $f$ y $g$ en cada región, puesto que esto nos indica el signo de las derivadas y nos da por lo tanto
+la dirección del flujo. En la Figura \ref{fig:espaciofases} se muestra el diagrama de fases, con las regiones donde $f$ y $g$ son positivas y negativas.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{../Ejercicio2/espaciodefases.pdf}
+    \caption{Diagrama de fases del sistema con $a = 0.5$ donde se indican las zonas donde $f$ y $g$ son positivas y negativas, además se muestra la dirección del flujo.}
+    \label{fig:espaciofases}
+\end{figure}
+
+Analicemos ahora la estabilidad lineal del equilibrio, primero linealizamos el sistema con lo que el jacobiano nos queda:
+
+\begin{equation*}
+    J = \begin{pmatrix}
+        -1 + 2 x y & a + x^2 \\
+        -2 x y & -a - x^2
+    \end{pmatrix},
+\end{equation*}
+
+evaluando en el punto de equilibrio $(x^{*},y^{*})$ obtenemos
+
+\begin{equation*}
+    J|_{(x^{*},y^{*})} = \begin{pmatrix}
+        1 - y^{*} & a - 1/4 \\
+        - y^{*} & -a - 1/4
+    \end{pmatrix}.
+\end{equation*}
+
+Podemos obtener ahora la traza y el determinante del jacobiano 
+
+\begin{align*}
+    \text{Det} J &= \left(a + \frac{1}{4}\right) > 0 \\
+    \text{Tr} J &= - a - \frac{5}{4} + \frac{2}{1 + 4 a}.
+\end{align*}
+
+Una primera conclusión que podemos realizar es que el sistema tendrá un equilibrio inestable cuando 
+$\text{Tr} J > 0$, es decir si $a \in \left(0, \frac{-3 + 2\sqrt{3}}{4} \approx 0.116\right)$, mientras que este será
+estable cuando $a \gtrapprox 0.116$.
+
+Podemos extraer más información del sistema realizando el análisis de autovalores de la matriz jacobiana, los cuales se obtienen como
+\begin{equation*}
+    \lambda_{1/2} = \frac{1}{2} \left( \text{Tr} \pm \sqrt{ (\text{Tr} J)^2 - 4 \text{Det} J}\right),
+\end{equation*}
+
+si analizamos únicamente el discriminante $\Delta = (\text{Tr} J)^2 - 4 \text{Det} J$ 
+de la ecuación obtenemos la expresión:
+\begin{equation*}
+    \frac{\left(4 a + 3 - 2 \sqrt{3}\right)^2 \left(4 a + 3 + 2 \sqrt{3}\right)^2 - 16 \left(1 + 4a\right)^3}{4^{6} \left(1 + 4a\right)^2},
+\end{equation*}
+
+donde observamos que el signo solo dependerá del numerador, este tiene la forma que se muestra en la Figura \ref{fig:numerador}.
+En esta se puede ver que el signo es negativo para $a$ entre 0 y aproximadamente $1.935$, mientras que para $a \gtrapprox 1.935$ es positivo.
+De esto podemos concluir que para $a \in \left(0, \frac{-3 + 2\sqrt{3}}{4} \approx 0.116\right)$ tenemos un espiral inestable y luego un espiral estable (ver figura \ref{fig:bifurcacion}).
+Luego para $a \gtrapprox 1.935$ tendremos que el espiral se convierte en un nodo estable (ver Figura \ref{fig:bifurcacion2}).
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{../Ejercicio2/numerador.pdf}
+    \caption{Numerador de la expresión del discriminante $\Delta$ de la ecuación de los autovalores de la matriz jacobiana.}
+    \label{fig:numerador}
+\end{figure}
+\end{multicols}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{../Ejercicio2/bifuracion.pdf}
+    \caption{Bifurcación del sistema en donde pasamos de un espiral inestable a un espiral estable.}
+    \label{fig:bifurcacion}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{../Ejercicio2/bifuracion2.pdf}
+    \caption{Bifurcación del sistema en el que el espiral estable se convierte en un nodo estable.}
+    \label{fig:bifurcacion2}
+\end{figure}
+
+En las figuras se puede ver además que cuando ocurre la transición de un espiral inestable a uno estable, en las cercanías del punto crítico $a_c = \frac{-3 + 2\sqrt{3}}{4}$
+ocurre una dinámica cuasi periódica en donde el sistema tarda mucho tiempo en llegar al equilibrio.
+
+\newpage
+
+\begin{multicols}{2}
+
+\section{Osciladores Acoplados}
+Consideremos el sistema de osciladores de fase acoplados definido por la ecuación:
+
+\begin{equation}
+\dot{\theta}i = \omega_i + \frac{k}{N} \sum_{j = 1}^{N} \sin(\theta_j - \theta_i),
+\end{equation}
+
+donde $\theta_i$ representa la fase del oscilador $i$, $\omega_i$ es su frecuencia natural, $k$ es la constante de acoplamiento y $N$ es el número total de osciladores.
+
+Para iniciar el análisis, veamos el caso más simple de $N = 2$ osciladores. 
+En esta configuración, observamos que el sistema puede presentar dos puntos de equilibrio 
+o ninguno, dependiendo de la relación entre las frecuencias naturales $\omega_1$ y $\omega_2$, 
+así como del valor del acoplamiento $k$. 
+La Figura \ref{fig:fases} muestra la evolución de las fases de los osciladores en 
+función del tiempo para diferentes valores de $\Delta \omega = \omega_1 - \omega_2$ y $k$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 1\linewidth]{../Ejercicio3/fases.pdf}
+    \caption{Evolución de las fases de los osciladores en función del tiempo para distintos valores de $\Delta \omega$ y $k$.}
+    \label{fig:fases}
+\end{figure}
+
+En primer lugar, observamos que cuando $\Delta \omega = 0$ y $k > 0$, los osciladores terminan sincronizándose 
+debido al acoplamiento entre ellos. Sin embargo, para $\Delta \omega > 0$ y $k > 0$, 
+la sincronización de los osciladores puede o no ocurrir, dependiendo del valor de $k$. 
+La Figura \ref{fig:fases} ilustra ambos escenarios, donde para $\Delta \omega > k$, 
+los osciladores no se sincronizan, mientras que para $\Delta \omega < k$, 
+los osciladores se sincronizan con una fase constante. 
+Este último caso se conoce como ``phase locking''.
+
+
+Ahora consideremos el caso de $N = 5$ osciladores. 
+En este escenario, el análisis no es tan directo como en el caso de dos osciladores, 
+ya que pueden ocurrir diversos fenómenos de sincronización debido a la presencia de 
+múltiples puntos de equilibrio.
+
+Para comenzar, estudiamos osciladores con frecuencias naturales relativamente 
+cercanas, $\omega_j = j$ para $j = 1, \ldots, 5$, 
+variando los valores de $k = 1,~2,~3,~4$. La Figura \ref{fig:fases5} 
+muestra la evolución de las fases de los osciladores en función del tiempo para 
+distintos valores de $k$.
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[width = 1\linewidth]{../Ejercicio3/fases5.pdf}
+        \caption{Evolución de las fases de los osciladores en función del tiempo para distintos valores de $k$.}
+        \label{fig:fases5}
+\end{figure}
+
+Inicialmente, observamos que para $k = 1,~2$, los osciladores permanecen desincronizados. 
+Sin embargo, cuando $k = 3, 4$, los osciladores alcanzan un estado de sincronización 
+en fase constante. Esta sincronización también se refleja en las frecuencias de los 
+osciladores, como se muestra en la Figura \ref{fig:frecuencias5}, donde se ilustra la 
+evolución de las frecuencias en función del tiempo para distintos valores de $k$.
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[width = 1\linewidth]{../Ejercicio3/frecuencias5.pdf}
+        \caption{Evolución de las frecuencias de los osciladores en función del tiempo para distintos valores de $k$.}
+        \label{fig:frecuencias5}
+\end{figure}
+
+Ahora, consideremos el caso en el que las frecuencias naturales de los osciladores son 
+significativamente diferentes, por ejemplo, $\omega_j = {1,~20,~30,~40,~50}$. 
+Tomamos valores de $k = 15,~25,~35,~40$. La Figura \ref{fig:fases5v2} muestra la 
+evolución de las fases de los osciladores para estos valores de $k$.
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[width = 1\linewidth]{../Ejercicio3/fases5v2.pdf}
+        \caption{Evolución de las fases de los osciladores en función del tiempo para distintos valores de $k$.}
+        \label{fig:fases5v2}
+\end{figure}
+
+En este caso, para $k = 15,~25$, los osciladores permanecen desincronizados. 
+Sin embargo, cuando $k = 35$, cuatro de los osciladores se sincronizan en un estado de fase 
+constante, mientras que el quinto oscilador permanece desincronizado. 
+Para $k = 40$, los cinco osciladores se sincronizan en un estado de fase constante, 
+con dos de ellos adquiriendo fases muy similares.
+
+Por último, en la Figura \ref{fig:frecuencias5v2} se muestra la evolución de las 
+frecuencias de los osciladores para diferentes valores de $k$. 
+Se observa que las frecuencias convergen hacia la media de las frecuencias naturales 
+de los osciladores cuando estos están sincronizados.
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[width = 1\linewidth]{../Ejercicio3/frecuencias5v2.pdf}
+        \caption{Evolución de las frecuencias de los osciladores en función del tiempo para distintos valores de $k$.}
+        \label{fig:frecuencias5v2}
+\end{figure}
+
+\end{multicols}
+
+\end{document}

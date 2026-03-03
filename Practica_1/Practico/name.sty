@@ -1,0 +1,147 @@
+%%% Todo esto funciona con pdflatex.
+%%% En www.ctan.org hay información sobre la mayoría de los paquetes.
+%%% Si bien se busca que no falte nada, puede ser más eficiente borrar lo que no se use.
+%%% El orden no es arbitrario. Para varios paquetes se recomienda primero haber cargado otros antes y no después.
+
+\usepackage[spanish, es-tabla]{babel}
+\selectlanguage{spanish} % Activa el lenguaje que se cargó.
+\usepackage[utf8]{inputenc} % Codificación para la escritura del .tex
+\usepackage[T1]{fontenc} % Codificación para la salida .pdf
+\usepackage{lmodern} % Versión latina de la fuente por defecto de latex
+\usepackage{graphicx} % Permite incluir gráficos
+\usepackage{float} % Permite definir objetos flotantes}
+% Paquetes de la American Mathematical Society (AMS)
+
+\usepackage{amsmath}
+\usepackage{amssymb} % Más símbolos matemáticos
+\usepackage{amsfonts} % Extensión de Computer Modern
+\usepackage{amsthm} % Más entornos matemáticos
+\usepackage{amsbsy} % Usar negrita en entornos matemáticos
+\usepackage{amsopn} % Definir operadores propios
+% \usepackage{amsrefs}
+    % Conflicto con bibtex
+% \usepackage{amscls} 
+    % No disponible en Overleaf.
+
+\usepackage{mathtools} % Mejora y corrige algunas cosas de los ams.
+\usepackage{mathabx} % Más símbolos matemáticos
+\usepackage{mathbbol} % Más símbolos matemáticas
+
+% \usepackage{anysize}
+%   \marginsize{20mm}{20mm}{18mm}{18mm}
+    % Parecido a geometry. Puede tener alguna ventaja según el caso.
+\usepackage[para]{footmisc} % Personificar notas al pie. El [para] sirve para que las mismas estén en una sóla línea.
+\usepackage[a4paper, left = 18mm, right = 18mm, top = 19.29mm, bottom = 17mm]{geometry}
+\usepackage[title]{appendix}
+\usepackage[affil-it]{authblk} % Para personalizar las filiaciones.
+\usepackage[final]{pdfpages}{} % Sirve para incluir .pdf
+\usepackage[hang,bf,justification=justified]{caption}
+\usepackage{subcaption}
+\usepackage{dsfont}
+\usepackage{vwcol} % Permite tener dos columnas con mayor libertad
+\usepackage{wrapfig} % Permite integrar gráficos con el texto
+\usepackage{esint}
+\usepackage{accents}
+\usepackage{color}
+\usepackage{pgfplots} % Gráficos en Tikz
+\pgfplotsset{compat=1.16} % Esto es medio de jodido, pero para que no se queje el compilador añadimos que versión de pgfplots usamos, ya que suele actualizarse con mucha frecuencia y puede cambiar el aspecto final.
+\usepackage{tikz} % Entorno para incluir figuras y más
+\usepackage[RPvoltages]{circuitikz} % Entorno para incluir circuitos basado en tikz
+\usetikzlibrary{babel} % Para evitar errores con el idioma y Tikz
+\usepackage[bibstyle=ieee, citestyle=numeric]{biblatex} % Extensión de bibtex que entre otras cosas permite ponerlo en español.
+\addbibresource{biblio.bib} % Archivo de donde tomar la bibliografía
+\usepackage{adjustbox} % No me acuerdo muy bien para que sirve pero tenía que ver con las tablas.
+\usepackage{diagbox} % Poner rayas diagonales en celdas de tablas.
+\usepackage{comment} % Comentar grandes secciones.
+\usepackage{array} % Mejora el armado de matrices
+\usepackage{multicol} % El nombre lo dice todo
+\usepackage{multirow} % Permite unificar celdas en tablas
+\usepackage{hyperref} % Para incluir hipervínculos
+\usepackage{url} % Incluir URL con formato propio
+\usepackage{siunitx} % Para unidades en SI
+\usepackage{xstring} % Operaciones con strings.
+\usepackage{csquotes} % Para poner las comillas como sugiere la RAE.
+\usepackage{enumerate} % Cambiar parámetros en listas.
+\usepackage{enumitem} % Lo mismo que antes pero más general.
+\usepackage{changepage} % Cambiar geometrías sólo en algunas páginas.
+\usepackage{fancyhdr} % Para el encabezado y las notas al pie
+	\pagestyle{fancy} % Establece estilo
+    \fancyhf{} % Limpia todo lo que pidiera estar de antes
+	\lhead{} % Texto a la izquierda en el encabezado
+	\rhead{} % Texto a la derecha en el encabezado
+    % \chead{}
+        % Texto al centro en el encabezado
+    % \lfoot{} 
+    % \rfoot{}
+	\cfoot{\thepage} % Parte de abajo. Una alternativa podría ser \cfoot{Página \thepage}.
+\usepackage{circuitikz}
+% Para añadir representaciones de compuestos químicos y reacciones
+
+% \usepackage{chemfig}
+% \usepackage{chemmacros}
+
+% \usepackage[pdf]{pstricks}
+% \usepackage{pst-all}
+% \usepackage{txfonts}
+    % Incluye algunas fuentes extras. Hay ciertos conflictos.
+% \usepackage{subfigure}
+    % Problemas con subcation.
+% \usepackage{minted} % Permite incluir código fuente. La verdad es que no da más que problemas. Así que lo mejor es que quede comentado hasta nuevo aviso.
+    
+%%%%% FIN PAQUETES %%%%%
+
+%%%%% COMIENZO DEFINICIONES %%%%%
+
+\DeclarePairedDelimiter{\paren}{(}{)} % Comando para automatizar los paréntesis
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert} % Comando para automatizar las barras al tomar valor absoluto
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil} % Comando para automatizar las barras al tomar el techo
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor} % Comando para automatizar las barras al tomar el piso
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert} % Comando para automatizar las barras al tomar la norma
+\DeclarePairedDelimiter{\set}{\{}{\}} % Comando para automatizar los corchetes
+\DeclarePairedDelimiter{\sbkt}{[}{]} % Comando para automatizar los brackets cuadrados
+\DeclarePairedDelimiter{\abkt}{\langle}{\rangle} % Comando para automatizar los brackets angulares
+
+% LO DE ABAJO PERMITE QUE SE ENUMEREN ELEMENTOS SEGÚN LA SECCIÓN.
+% \numberwithin{equation}{section}
+% \numberwithin{figure}{section}
+% \numberwithin{table}{section}
+
+\renewcommand\Authand{, } % Para que ponga una coma y no un 'and' en los autores.
+
+\makeatletter
+\let\@fnsymbol\@arabic % Para que liste las footnotes con números arábigos.
+\makeatother
+
+% Para poder enumerar proposiciones matemáticas.
+
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}{Corolario}[theorem]
+\newtheorem{lemma}{Lema}[theorem]
+\newtheorem*{remark}{Observación}
+
+\newcommand*{\igual}{=} % Sirve para que no haya conflictos al poner estos símbolos en circuitos.
+\newcommand*{\comas}{,}
+\newcommand*{\abrir}{[}
+\newcommand*{\cerrar}{]}
+\definecolor{color1bg}{RGB}{120,94,240}
+\definecolor{color2bg}{RGB}{220,38,127}
+\definecolor{color3bg}{RGB}{254,97,0}
+\definecolor{color4bg}{RGB}{255,176,0}
+\DeclareSIUnit\torr{Torr}
+\setlength{\parskip}{6pt} % Separación entre párrafos.
+\setlength{\parindent}{0.1pt} % Elimina las sangrías
+\setlength{\columnsep}{8mm} % Separación entre columnas.
+%\setlength{\baselineskip}{0pt} % Separación entre líneas.
+\setlength\textheight{250mm}%
+% \pagenumbering{gobble} % Elimina la enumeración de páginas.
+% \thispagestyle{empty}
+
+%%%%% COMIENZO TÍTULO %%%%%
+
+
+\title{\vspace{-13mm}\Large{\textbf{Práctica 1 - Modelos de una sola población}}}
+\author[a]{\normalsize{\textsc{Juan Pablo Morales}}\footnotesize{\footnote{juan.morales@ib.edu.ar}}}
+\affil[a]{\small{Instituto Balseiro - Centro Atómico Bariloche. Av Bustillo 9500, 8400 Bariloche, Río Negro, Argentina}\vspace{-9.3mm}}
+\date{\small{\textsc{\today}}\vspace{-8.3mm}}
+
+%%%%% FIN TÍTULO %%%%%

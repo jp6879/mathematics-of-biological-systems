@@ -1,0 +1,309 @@
+\documentclass[spanish, 12pt, a4paper]{article}
+
+\usepackage{name}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+\setcounter{page}{1}
+\maketitle
+\begin{multicols}{2}
+
+\section{El mapeo de Beverton - Holt}
+El modelo de Beverton-Holt es un modelo de dinámica de poblaciones que reproduce el comportamiento de la ecuación logística, y está definido por la siguiente expresión:
+
+\begin{equation}
+n_{t+1} = \frac{r n_t}{1 + \frac{r-1}{K} n_t},
+\label{eqn:map-beverton-holt}
+\end{equation}
+
+donde $n_t$ es la población discreta en el tiempo $t$, $K$ es la capacidad de carga y $r$ es la tasa de reproducción.
+
+En primer lugar, buscamos los puntos de equilibrio, es decir, aquellos valores de $n_t$ para los cuales $n_{t+1} = n_t$ en la ecuación \eqref{eqn:map-beverton-holt}. De esta manera, obtenemos $n_t = K$ y $n_t = 0$, al igual que en el modelo logístico. Para analizar la estabilidad de estos puntos de equilibrio, calculamos la derivada de la ecuación \eqref{eqn:map-beverton-holt} con respecto a $n_t$ y la evaluamos en los puntos de equilibrio. Así, obtenemos:
+
+\begin{equation}
+f^{\prime}(n_t) = \frac{r\left( 1 + \frac{r - 1}{K} n_t \right) - r n_t \frac{r - 1}{K}}{\left( 1 + \frac{r - 1}{K} n_t \right)^2}
+\label{eqn:derivada-beverton-holt}
+\end{equation}
+
+Al evaluar esta expresión en $n_t = K$ y $n_t = 0$, obtenemos que $f^{\prime}(K) = 1/r$ y $f^{\prime}(0) = r$. Por lo tanto, el punto de equilibrio $n_t = K$ es estable si $r > 1$ y el punto de equilibrio $n_t = 0$ es estable si $r < 1$.
+
+Veamos esto ejemplificado en una simulación numérica con $K = 50$, realizada hasta un tiempo $t = 50$, donde se varían $r$ y la población inicial $n_0$.
+
+\begin{itemize}
+\item En la Figura \ref{fig:beverton-holt-r-0.5}, utilizamos un valor de $r = 0.5 < 1$. Se observa que el sistema tiende al punto de equilibrio $n_t = 0$, es decir, la población se extingue.
+\item En la Figura \ref{fig:beverton-holt-r-2}, utilizamos un valor de $r = 2 > 1$,. Se observa que el sistema tiende al punto de equilibrio $n_t = K$, es decir, a la población máxima limitada por la capacidad de carga del modelo.
+\item En la Figura \ref{fig:beverton-holt-r-1}, se observa que con $r = 1$ el sistema se queda en el punto inicial $n_0$, es decir, no hay crecimiento ni decrecimiento de la población.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Practico/ej_01/Beverton_Holt_r_0.5.pdf}
+    \caption{Simulación del mapeo de Beverton - Holt con $r = 0.5$ para distintas condiciones iniciales.}
+    \label{fig:beverton-holt-r-0.5}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Practico/ej_01/Beverton_Holt_r_2.pdf}
+    \caption{Simulación del mapeo de Beverton - Holt con $r = 2$ para distintas condiciones iniciales.}
+    \label{fig:beverton-holt-r-2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Practico/ej_01/Beverton_Holt_r_1.pdf}
+    \caption{Simulación del mapeo de Beverton - Holt con $r = 1$ para distintas condiciones iniciales.}
+    \label{fig:beverton-holt-r-1}
+\end{figure}
+
+\section{Ecuación logística con retraso}
+La ecuación logística con retraso consiste en una variante de la ecuación logística que tiene en cuenta la historia previa del sistema hasta un tiempo $T$. Está definida por la siguiente ecuación diferencial:
+
+\begin{equation}
+\frac{dN}{dt} = rN(t)\left[ 1 - \frac{N(t - T)}{K} \right],
+\label{eqn:logistic-delay}
+\end{equation}
+
+donde $r$ es la tasa de reproducción, $K$ es la capacidad de carga y $T$ es el retraso.
+
+Se resolvió numéricamente esta ecuación variando la tasa de reproducción $r$, manteniendo $K = 10$ y $T = 1$ constantes. Dado que esta ecuación diferencial incluye un retraso, necesitamos condiciones iniciales para $t \in [-T, 0]$; en esta simulación, utilizamos $N(t) = 2$ para estas condiciones iniciales.
+
+Los resultados obtenidos se muestran en la Figura \ref{fig:logistic-delay-num}. En ella se pueden observar distintos regímenes. Para $r = 0.3$, se observa un régimen monótono similar al de la ecuación logística sin retraso. Para $r = 1.2$, comienzan a observarse pequeñas oscilaciones amortiguadas antes de converger al valor de equilibrio. Mientras que para $r = 2$, se observa un régimen oscilatorio sin tender a un valor fijo.
+
+Aunque en un sistema dinámico unidimensional no es posible que aparezcan oscilaciones, estas ocurren en este caso debido a que el sistema requiere de infinitas condiciones iniciales para su resolución.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../Practico/Ej_02/Logistica_delay.pdf}
+    \caption{Simulación numérica de la solución de la ecuación logística con delay para distintas tasas de reproducción $r$.
+    Pueden observarse distintos regímenes de la solución.}
+    \label{fig:logistic-delay-num}
+\end{figure}
+
+Con el objetivo de verificar la solución numérica obtenida, se realizó una comparación con una solución aproximada de la ecuación (\ref{eqn:logistic-delay}), dada por:
+
+\begin{equation}
+N(t) \approx 1 + c e^{\frac{\epsilon t}{1 + \pi^2 / 4}} e^{i t \left[ 1 - \frac{\epsilon \pi}{2 \left( 1 + \pi^2/4 \right)} \right]},
+\label{eqn:logistic-delay-aprox}
+\end{equation}
+
+Esta aproximación es válida para un régimen donde $T$ es mayor al valor crítico $T_c = \pi/2r$. En este caso, tomamos $T = \epsilon + T_c$, con $r = 2$ y un valor de $\epsilon = 1 \times 10^{-3}$ para las simulaciones.
+
+Los resultados se muestran en la Figura \ref{fig:logistic-delay-aproxvnum}. Se observa que para tiempos cortos, las soluciones son aproximadamente iguales; sin embargo, para tiempos largos, las soluciones se desfasan. Además, se aprecia que la solución aproximada continúa sin decaimiento, mientras que esto sí ocurre para la solución numérica.
+
+\begin{figure}[H]
+    \includegraphics[width=1\linewidth]{../Practico/Ej_02/Aproximacion_vs_exacta.pdf}
+    \caption{Solución numérica de la ecuación logística con delay comparada con la solución aproximada de la misma.}
+    \label{fig:logistic-delay-aproxvnum}
+\end{figure}
+
+Para los regímenes con oscilaciones, se analizó la dependencia de la amplitud de las mismas con la condición inicial. Se realizaron simulaciones tomando $N_0 = {2,~6.5,~11}$ constantes para $t \in [-T, 0]$. Los resultados de las soluciones en estado estacionario se muestran en la Figura \ref{fig:vefirica_amplitudes}. Se observa que la amplitud de las oscilaciones no depende de la condición inicial. Esto también se verifica en la Figura \ref{fig:vefirica-dif-amplitudes}, donde se muestran las diferencias entre las amplitudes para distintas simulaciones, las cuales no superan una diferencia máxima de 0.07.
+
+\begin{figure}[H]
+    \includegraphics[width=1\linewidth]{../Practico/Ej_02/Verificacion_amplitud.pdf}
+    \caption{Soluciones numéricas de la ecuación logística con delay con distintas condiciones iniciales con los parámetros para encontrarse en el régimen oscilatorio.}
+    \label{fig:vefirica_amplitudes}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=1\linewidth]{../Practico/Ej_02/Verificacion_diferencias_amplitud.pdf}
+    \caption{Diferencias entre las amplitudes de distintas simulaciones en función de la condición inicial $N_0$.}
+    \label{fig:vefirica-dif-amplitudes}
+\end{figure}
+
+Se realizó un análisis similar para investigar la dependencia del período de las oscilaciones en función de la tasa de reproducción $r$. Los resultados se muestran en la Figura \ref{fig:vefirica-periodo}. En esta figura se puede observar que el período aumenta a medida que se incrementa la tasa de reproducción $r$.
+\begin{figure}[H]
+    \includegraphics[width=1\linewidth]{../Practico/Ej_02/Verificacion_periodo.pdf}
+    \caption{Período de las soluciones numéricas de la ecuación logística con delay en el régimen oscilatorio con distintos valores de $r$.}
+    \label{fig:vefirica-periodo}
+\end{figure}
+
+\section{Modelo matricial de Leslie}
+Las matrices de Leslie son un tipo de matriz utilizada en biología matemática para modelar la dinámica poblacional, especialmente en poblaciones estructuradas por edades. La solución
+está asociada a un crecimiento exponencia único, $L E = r E$ donde $L$ es la matriz de Lesile para $k+1$ grupos etarios como:
+
+\begin{align*}
+& E_1=\frac{S_0}{r} E_0, \quad r  E_0=f_0 E_0+\ldots+f_n E_K \\
+& E_2=\frac{S_1}{r} E_1=\frac{S_1 S_0}{r^2} E_{0}\\
+& E_k=\frac{S_{k-1} \cdots S_0 E_0}{r^k} \\
+\end{align*}
+
+Con estas ecuaciones:
+\begin{eqnarray}
+    r^{k+1} - \left( r^k f_0 + r^{k-1} f_1 s_0 + r^{k-2} f_2 s_0 s_1 + \right. \nonumber \\
+    \left. \ldots + f_k s_0 s_1 \cdots s_{k-1}\right).
+    \label{eqn:leslie}
+\end{eqnarray}
+Una de las raíces es el valor de $r$ que buscamos, según el criterio de Decartes como hay un solo cambio de signo de los coeficientes 
+tendremos una sola raíz positiva que llamaremos $r_1$
+
+Evaluando $r_1$ en la ecuación \ref{eqn:leslie} obtenemos:
+
+$$
+R=1-\left(f_0 + f_1 s_0 + \ldots + f_k s_0 s_1 \cdots s_{k-1}\right)
+$$
+
+Supongamos que $r_1 > 1$. Al ser raíz del polinomio
+
+\begin{align*}
+& r_1^{k+1}-\left(r_1^k f_0 + r_1^{k-1} f_1 s_0 + \ldots + f_k s_0 s_1 \cdots s_{k-1}\right) = 0 \\
+& r_1^{k + 1}\left[1-\frac{f_0}{r_1}+\frac{f_1 s_0}{r_1^2}+\cdots+\frac{f_k s_0 s_1 \cdots s_{k-1}}{r_1^{k+1}}\right]=0 \\
+& \text { como } r_1 \neq 0 \\
+& \frac{f_0}{r_1}+\frac{f_1 s_0}{r_1^2}+\cdots+\frac{f_k s_0 s_1 \cdots s_{k-1}}{r_1^{k+1}}=1 \\
+& \Rightarrow \left(f_0 + f_1 s_0 + \ldots + f_k s_0 s_1 \cdots s_{k-1}\right) > 1,
+\end{align*}
+
+pues supusimos que $r_1 > 1$ entonces $R < 0$.
+
+Ahora supongamos que $R < 0$ 
+
+\begin{eqnarray*}
+    1 - \left(f_0 + f_1 s_0+\ldots+f_k s_0 s_1 \ldots s_{k-1}\right) < 0 \\
+    \Rightarrow 1<f_n+f_1 s_0+\ldots+f_k s_0 s_1 \ldots s_{k-1}
+\end{eqnarray*}
+
+Supongamos, que $r_1<1$ entonces
+
+\begin{eqnarray*}
+    \frac{f_0}{r_1}+\frac{f_1 s_0}{r_1^l}+\cdots+\frac{f_k s_0 s_1 \cdots s_{n-l}}{r_1^{k+1}} > \\
+    f_0+f_1 s_0+\cdots+f_k s_0 s_1 \cdots s_{k-1}>1
+\end{eqnarray*}
+
+Pero vimos que si $r_1$ es raíz el término de la izquierda es 1 $\Rightarrow$ tenemos $1>1$, absurdo que viene de suponer $r_1<1$ y si $r_1 = 1$ entonces $R = 0$ lo que tampoco coincide con la suposición $R < 0$ por lo tanto $r_1 > 1$
+
+\section{Especie con ciclo de vida anual}
+Simulamos un sistema de individuos en el cual cada individuo produce $r$ descendientes y luego muere. La población evoluciona de acuerdo
+a:
+\begin{equation}
+    N_{t+1} = r N_t
+\end{equation}
+Este $r$ obedece a una distribución de Poisson con media $1.7$ y comenzamos con un solo individuo, en la figura 
+\ref{fig:poblacion_poisson} se muestra la evolución de la población en función del tiempo. 
+
+En principio se observa que la población crece de manera exponencial, sin embargo dado que la descendencia muchas veces es 
+0 puesto que $r$ es un valor aleatório tomado de una distribución de Poisson, ocurre que la población se termina extinguiendo.
+
+\begin{figure}[H]
+    \includegraphics[width=1\linewidth]{../Practico/Ej_04/SimulacionPoisson.pdf}
+    \caption{Población $N$ en función del tiempo $t$ para una descendencia $r$ variable aleatoria que sigue una distribución de Poisson con media $1.7$.}
+    \label{fig:poblacion_poisson}
+\end{figure}
+
+\section{Población de animales costero intertidal}
+
+Considereamos una población de animales costeros, que viven entre las líneas de marea alta y baja. Estas poblaciones son vulerables al efecto de tormentas severas,
+que las afectan de distinto modo según su intensidad y el estado de la marea. Supongamos que puede modelar el sistema mediante una evolución determinista entre 
+eventos desastrosos que ocurren al azar.
+
+Consideramos un modelo logistico entre desastres: $\dot{N} = rN(1-N/K)$, donde $r$ es la tasa de crecimiento y $K$ es la capacidad de carga. Si ocurre una castástrofe a tiempo $t$
+la población se ve disminuida en una fracción $p$ como $N(t^{+}) = pN(t)$. Los tiempos entre desastres siguen una distribución exponencial con media $1/\lambda$.
+
+Realizamos una simulación de este modelo durante el periodo $t \in [0,50]$ con $r = 1$, $K = 100$, $p = 0.5$, $\lambda = 0.5$ y población inicial $N_0 = 10$. 
+En la figura \ref{fig:costero-intertidal} se muestra la evolución de la población en función del tiempo.
+
+\begin{figure}[H]
+    \includegraphics[width=1\linewidth]{../Practico/Ej05/CatastrofesPoblacion.pdf}
+    \caption{Evolución de la población $N$ en función del tiempo $t$ para una población costera intertidal con eventos catastróficos.}
+    \label{fig:costero-intertidal}
+\end{figure}
+
+Se puede observar como la población a pesar de sufirir eventos catastróficos, que se muestran como disminuciones abruptas en la población, esta logra recuperarse y llegar a un equilibrio estable.
+
+Encontremos una condición para la extinción, sabemos que la ecuación logística entre catástrofes tiene una solución dada por
+
+\begin{equation}
+    N(t) = \frac{N_0 K e^{rt}}{K + N_0 \left( e^{rt} - 1 \right)},
+    \label{eqn:SolLogistica}
+\end{equation}
+
+donde $N_0$ es la población inicial. Si suponemos que a un tiempo $t \approx \frac{1}{\lambda}$ ocurre una catástrofe entonces tendremos que en  un tiempo
+posterior $t^{+}$
+
+\begin{equation}
+    N(t^{+}) = p N(\frac{1}{\lambda}) = \frac{p N_0 K e^{\frac{r}{\lambda}}}{K + N_0 \left( e^{\frac{r}{\lambda}} - 1 \right)}
+    \label{eqn:SolLogisticaCatastrofe}
+\end{equation}
+
+Si continuamos con la evolución de la población depués de la catástrofe tenemos nuevamente la ecuación logística por lo que
+la población a un tiempo $t_2$ será:
+
+\begin{equation}
+    N_2 (t_2) = \frac{N(t^{+}) K e^{r \left(t_2 - \frac{1}{\lambda} \right)}}{K + N(t^{+}) \left( e^{r \left(t_2 - \frac{1}{\lambda} \right)} - 1 \right)}
+\end{equation}
+
+Es decir nuevamente tenémos una solución de la logística pero esta vez con la condición inicial en $N(t^{+})$.
+Si la población se extingue tenemos que considerar que $N(t^{+}) \approx 0$. Si hacemos esto en expansión de Taylor quedamos en que
+
+\begin{equation}
+    N(t) \approx p N(t^{+}) e^{\frac{r}{\lambda}},
+    \label{eqn:CondExtincion}
+\end{equation}
+
+en donde ignoramos los índices y tomamos como si empezaramos a contar desde el tiempo de la catástrofe.
+Si la población se extingue entonces el factor $p e^{\frac{r}{\lambda}}$ debe ser menor a 1.
+En la simulación realizada teníamos $p = 0.5$ y $\lambda = 0.5$ por lo que la condición de extinción es $r \lessapprox 0.345$.
+
+En la figura \ref{fig:costero-intertidal-extincion} se muestra la evolución de la población en función del tiempo para un valor de $r = 0.3$.
+
+\begin{figure}[H]
+    \includegraphics[width=1\linewidth]{../Practico/Ej05/CatastrofesPoblacionExtincion.pdf}
+    \caption{Evolución de la población $N$ en función del tiempo $t$ para una población costera intertidal con eventos catastróficos y extinción.}
+    \label{fig:costero-intertidal-extincion}
+\end{figure}
+
+\section{Efecto Alle}
+El efecto Alle da cuenta de un fenómeno, descripto por W.C. Allee, asociado a la existencia de un número crítico mínimo de individuos para garantizar la supervivencia de la especie.
+Se supone que a partir de cierto umbral, el tamaño poblacional es tan reducido que los individuos no se reproducen al no encontrarse con otros individuos de la misma población. 
+Una manera de modelar este efecto es por medio de la siguiente ecuación:
+
+\begin{equation}
+    \frac{dN}{dt} = rN \left[ 1 - \frac{N}{K} \right] \left[ \frac{N}{A} - 1 \right]
+    \label{eqn:Alle}
+\end{equation}
+
+Analizamos los equilibrios de la ecuación \ref{eqn:Alle} y la estabilidad de los mismos. 
+Para ello calculamos los puntos de equilibrio de la ecuación \ref{eqn:Alle} y la derivada de la misma con respecto a $N$.
+
+\begin{eqnarray*}
+    f^{\prime} = r \left( 1 - \frac{N}{K} \right) \left( \frac{N}{A} - 1 \right) \\
+    - ~ \frac{rN}{K} \left( \frac{N}{A} - 1 \right) \\
+    + ~ \frac{rN}{A} \left( 1 - \frac{N}{K} \right)
+\end{eqnarray*}
+
+Evaluando en los puntos de equilibrio $N = 0$, $N = K$ y $N = A$ tenemos que $f^{\prime}(0) = -r$, $f^{\prime}(K) = r \left(1 - \frac{K}{A} \right)$ y $f^{\prime}(A) = r \left(1 - \frac{A}{K}\right)$.
+De estas obtenemos las siguientes condiciones de equilibrio:
+
+\begin{itemize}
+    \item Si $r > 0$:
+    \begin{itemize}
+        \item $N = 0$ es estable
+        \item $N = K$ es estable si $K > A$
+        \item $N = A$ es estable si $A > K$
+    \end{itemize}
+
+    \item Si $r < 0$:
+    \begin{itemize}
+        \item $N = 0$ es inestable
+        \item $N = K$ es estable si $K < A$
+        \item $N = A$ es estable si $A < K$
+    \end{itemize}
+
+\end{itemize}
+
+En la ecuación logística para una población buscabamos que $N = 0$ sea inestable para $r > 0$ y estable para $r < 0$. 
+En este caso es distinto porque cuando $r>0$ la población se extingue si $A < K$, por lo tanto si empezamos con una condición inicial $N_0 < A$ la población se extingue.
+
+Esto se muestra en la figura \ref{fig:alle} donde se simula la evolución de la población en función del tiempo 
+para distintos valores de $N_0$ y valores fijos de $A = 10$, $K = 20$ y $r = 0.1$.
+
+\begin{figure}[H]
+    \includegraphics[width=1\linewidth]{../Practico/Ej06/Alle.pdf}
+    \caption{Evolución de la población $N$ en función del tiempo $t$ para una población con efecto Alle.}
+    \label{fig:alle}
+\end{figure}
+
+\end{multicols}
+
+\end{document}

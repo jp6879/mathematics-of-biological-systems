@@ -1,0 +1,376 @@
+\documentclass[spanish, 12pt, a4paper]{article}
+
+\usepackage{name}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+\setcounter{page}{1}
+\maketitle
+\begin{multicols}{2}
+
+\section{Redes de Kauffman}
+
+Una definición alternativa a las redes NK es que K se refiera al máximo valor que pueda tomar el número de entradas de un nodo. Analizar la dinámica de las siguientes redes, hallar
+atractores y ciclos
+
+\subsection{Red NK(3,3)}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Red1.pdf}
+    \caption{Red NK(3,3)}
+    \label{fig:Red1}
+\end{figure}
+
+En esta red tenemos 3 nodos dos con dos entradas y otro con 3, donde se toman las dinámicas como:
+\begin{itemize}
+    \item $A(t+1) = B(t) \land C(t)$
+    \item $B(t+1) = A(t) \lor B(t)$
+    \item $C(t+1) = \lnot A(t) \land \left(B(t) \lor C(t)\right)$
+\end{itemize}
+
+Estas reglas en la actualización de los nodos a partir de los valores iniciales $t$ dan la siguiente tabla de estados a tiempo $t+1$:
+
+\begin{table}[H]
+    \begin{tabular}{|lll|lll|}
+    \hline
+    \multicolumn{3}{|l|}{t}                              & \multicolumn{3}{l|}{t+1}                            \\ \hline
+    \multicolumn{1}{|l|}{A} & \multicolumn{1}{l|}{B} & C & \multicolumn{1}{l|}{A} & \multicolumn{1}{l|}{B} & C \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{0} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0} & 0 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{0} & 1 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0} & 1 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{1} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} & 1 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{1} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{1} & 1 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{0} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{0} & 1 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{1} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{1} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \end{tabular}
+\end{table}
+
+Si seguimos las dinámicas desde un punto inicial, vemos que existen dos estados estables que son el 000 y el 001. Por otro lado existe un ciclo al que convergen los estados 100 y 101 que está conformado por los estados
+011, 111, 110 y 010.
+
+\subsection{Red NK(2,3)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Red2.pdf}
+    \caption{Red NK(2,3)}
+    \label{fig:Red2}
+\end{figure}
+
+En esta red tenemos 3 nodos, dos con una única entrada y uno con dos. Las dinámicas consideradas son las siguientes:
+\begin{itemize}
+    \item $A(t+1) = C(t)$
+    \item $B(t+1) = A(t)$
+    \item $C(t+1) = \lnot \left( A(t) \lor B(t)\right)$.
+\end{itemize}
+
+Estas dan la siguiente tabla de estados a tiempo $t+1$:
+
+\begin{table}[H]
+    \begin{tabular}{|lll|lll|}
+    \hline
+    \multicolumn{3}{|l|}{t}                              & \multicolumn{3}{l|}{t+1}                            \\ \hline
+    \multicolumn{1}{|l|}{A} & \multicolumn{1}{l|}{B} & C & \multicolumn{1}{l|}{A} & \multicolumn{1}{l|}{B} & C \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{0} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0} & 1 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{0} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{0} & 1 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{1} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0} & 0 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{1} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{0} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{0} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{0} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{1} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{1} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \end{tabular}
+\end{table}
+Si seguimos la dinámica empezando desde un estado inicial vemos que existe un único ciclo al que convergen los estados 011, 100 y 111, que está compuesto por el resto de estados, es decir 000, 001, 101, 110 y 010.
+
+\subsection{Red NK(3,3)}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Red3.pdf}
+    \caption{Red NK(3,3)}
+    \label{fig:Red3}
+\end{figure}
+
+En esta red tenemos 3 nodos todos con 3 entradas y las dinámicas son las siguientes:
+
+\begin{itemize}
+    \item $A(t+1) = A(t) \lor B(t) \oplus C(t)$
+    \item $B(t+1) = \left(A(t) \lor B(t) \lor \lnot C(t)\right) \land \lnot \left(A(t) \land B(t) \land \lnot C(t)\right)$
+    \item $A(t+1) = \lnot\left(A(t) \land B(t) \land C(t)\right)$
+\end{itemize}
+
+Para simplificar la dinámica de la regla para $B(t+1)$ se utilizaron las leyes de Morgan y la distributiva, quedándonos con $B(t+1) = C(t)\land \lnot \left(A(t) \lor B(t)\right) \lor \lnot\left(A(t) \land B(t)\right)$
+
+Estas reglas dan la siguiente tabla de estados a tiempo $t+1$:
+
+\begin{table}[H]
+    \begin{tabular}{|lll|lll|}
+    \hline
+    \multicolumn{3}{|l|}{t}                              & \multicolumn{3}{l|}{t+1}                            \\ \hline
+    \multicolumn{1}{|l|}{A} & \multicolumn{1}{l|}{B} & C & \multicolumn{1}{l|}{A} & \multicolumn{1}{l|}{B} & C \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{0} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} & 1 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{0} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{1} & 0 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{1} & 1 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{0} & 0 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{0} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{1} & 0 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{0} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{1} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{0} & 0 \\ \hline
+    \end{tabular}
+\end{table}
+
+En esta red se puede ver que existe un único atractor inestable que es un ciclo conformado por los estados 110 y 100, al cual convergen el resto de estados.
+
+\section{Red NK(3,2)}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Red4.pdf}
+    \caption{Red NK(3,2)}
+    \label{fig:Red4}
+\end{figure}
+
+En esta red tenemos 3 nodos, todos con 2 entradas únicamente. Las dinámicas consideradas son las siguientes:
+
+\begin{itemize}
+    \item $A(t+1) = B(t) \land C(t)$
+    \item $B(t+1) = A(t) \lor B(t)$
+    \item $C(t+1) = A(t) \land B(t)$.
+\end{itemize}
+
+Estas reglas dan la siguiente tabla de estados a tiempo $t+1$:
+
+\begin{table}[H]
+    \begin{tabular}{|lll|lll|}
+    \hline
+    \multicolumn{3}{|l|}{t}                              & \multicolumn{3}{l|}{t+1}                            \\ \hline
+    \multicolumn{1}{|l|}{A} & \multicolumn{1}{l|}{B} & C & \multicolumn{1}{l|}{A} & \multicolumn{1}{l|}{B} & C \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{0} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0} & 0 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{0} & 1 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{1} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0} & 0 \\ \hline
+    \multicolumn{1}{|l|}{0} & \multicolumn{1}{l|}{1} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{0} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{0} & 1 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{1} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{1} & 0 & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0} & 0 \\ \hline
+    \multicolumn{1}{|l|}{1} & \multicolumn{1}{l|}{1} & 1 & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{1} & 1 \\ \hline
+    \end{tabular}
+\end{table}
+
+
+En esta red existen dos estados estables el 111 y el 000 el cual es un atractor al cual convergen el resto de estados.
+
+\section{Dinámica del replicador}
+Analizar los siguientes juegos (Halcones y palomas extendidos) mediante la dinámica del replicador. Representar las órbitas sobre el simplex.
+
+\subsection{Halcones, Palomas, Bravucones}
+
+En este juego tenemos la siguiente matriz de pagos
+
+\begin{equation}
+    A = \begin{pmatrix}
+        \frac{G-C}{2} & G & G \\
+        0 & \frac{G}{2} & 0 \\
+        0 & G & \frac{G}{2},
+    \end{pmatrix}
+\end{equation}
+
+donde $G$ es el beneficio que se obtiene al ganar una pelea y $C$ es el costo de la pelea. En este caso se tiene que la primera fila corresponde al pago de la estrategia pura de halcón ($H$), la segunda a la de paloma ($P$) y la tercera a la de brabucón ($B$).
+
+\begin{align}
+    \dot{x_H} &= x_H \left( f_H - \bar{f}\right) \\
+    \dot{x_P} &= x_P \left( f_P - \bar{f}\right) \\
+    \dot{x_B} &= x_B \left( f_B - \bar{f}\right)
+\end{align}
+
+donde $x_i$ es la fracción de la población de la especie $i$, $f_i$ es el pago promedio de la estrategia de la especie $i$ y $\bar{f}$ es el pago promedio de la población, es decir $\bar{f} = x_H f_H + x_P f_P + x_B f_B$.
+
+Como consideramos que la población se mantiene constante, es decir que $x_H + x_P + x_B = 1$, podemos transformar el sistema de ecuaciones en uno de dos dimensiones. Para esto, escribimos $x_B = 1 - x_H - x_P$ y reemplazamos en las ecuaciones anteriores.
+
+Realizando los cálculos obtenemos los siguientes valores de pago promedio y pagos de las estrategias:
+\begin{align*}
+    \bar{f} &= - \frac{C}{2} x_H^2 + \frac{G}{2} \\
+    f_H &= \frac{G-C}{2} x_H + x_P G + \left(1 - x_H - x_P\right) G \\
+    f_P &= \frac{G}{2} x_P
+\end{align*}
+
+Con estos resultados obtenemos el siguiente sistema de ecuaciones diferenciales:
+
+\begin{align}
+    \dot{x_H} &= \frac{x_H}{2} \left[ C x_H^2 - \left(G + C\right) x_H + G \right]\\
+    \dot{x_P} &= \frac{x_P}{2} \left(C x_H^2 + G x_P - G\right).
+\end{align}
+
+De este sistema se obtienen los siguientes equilibrios en el caso de que $C > G$: (0, 0, 1), (0, 1, 0), (1, 0, 0), ($\frac{G}{C}$, 0, $1 - \frac{G}{C}$) y ($1 - \frac{G}{C}$, 0, $\frac{G}{C}$). 
+
+Analizamos la estabilidad lineal de estos equilibrios, tenemos que la matriz jacobiana del sistema es:
+
+\begin{equation}
+    J = \begin{pmatrix}
+        \frac{3C}{2} x_H^2 - \left(G + C\right) x_H + \frac{G}{C} & 0 \\
+        Cx_H x_P & C \frac{x_H^2}{2} + G x_P - \frac{G}{2}.
+    \end{pmatrix}
+\end{equation}
+
+Evaluando la matriz jacobiana en los equilibrios obtenemos lo siguiente:
+
+Para el (0, 0 ,1): 
+
+\begin{equation*}
+    J|_{(0, 0, 1)} = \begin{pmatrix}
+        \frac{G}{2} & 0 \\
+        0 & -\frac{G}{2}
+        \end{pmatrix},
+\end{equation*}
+tenemos que el equilibrio es inestable y el punto fijo es un saddle.
+
+Para el (0, 1, 0):
+
+\begin{equation*}
+    J|_{(0, 1, 0)} = \begin{pmatrix}
+        \frac{G}{2} & 0 \\
+        0 & \frac{G}{2}
+        \end{pmatrix},
+\end{equation*}
+tenemos que el equilibrio es inestable y el punto fijo es un nodo inestable.
+
+Para el (1, 0, 0):
+
+\begin{equation*}
+    J|_{(1, 0, 0)} = \begin{pmatrix}
+        \frac{C - G}{2} & 0 \\
+        0 & \frac{C - G}{2}
+        \end{pmatrix},
+\end{equation*}
+
+en este caso el equilibrio es estable y el punto fijo es un nodo estable si $C < G$, en este caso los puntos fijos con valores $G/C$ dejan de formar parte del simplex donde se encuentran las soluciones.
+En el caso en que $C < G$ el punto fijo es inestable.
+
+Para el $\left(\frac{G}{C}, 0, 1 - \frac{G}{C}\right)$:
+\begin{equation*}
+    J|_{\left(\frac{G}{C}, 0, 1 - \frac{G}{C}\right)} = \begin{pmatrix}
+        \frac{G}{2}\left(\frac{G}{C} - 1\right) & 0 \\
+        0 & \frac{G}{2}\left(\frac{G}{C} - 1\right)
+        \end{pmatrix},
+\end{equation*}
+
+como este punto fijo solo existe en el espacio de soluciones si $\frac{G}{C} < 1$ entonces el punto fijo es estable.
+
+Para el $\left(1 - \frac{G}{C}, 0, \frac{G}{C}\right)$:
+\begin{equation*}
+    J|_{\left(1 - \frac{G}{C}, 0, \frac{G}{C}\right)} = \begin{pmatrix}
+        \frac{G}{2}\left(\frac{G}{C - 1}\right) & 0 \\
+        0 & \frac{G}{2}\left(1 - \frac{G}{C}\right)
+        \end{pmatrix},
+\end{equation*}
+en este caso el punto fijo es inestable. Si ponemos valores numéricos $G = 1$ y $C = 2$ obtenemos el siguiente gráfico de las órbitas en el simplex.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Simplex1.pdf}
+    \caption{Órbitas en el simplex del juego Halcones, Palomas y Bravucones con $G/C = 0.5$.}
+    \label{fig:Simplex1}
+\end{figure}
+
+Vemos que la estrategia que será predominante es la de una población con mitad de Halcones y mitad de Bravucones. 
+
+\subsection{Halcones, Palomas, Vengativos}
+En este caso tenemos la siguiente matriz de pagos:
+
+\begin{equation}
+    A = \begin{pmatrix}
+        \frac{G-C}{2} & G & \frac{G-C}{2} \\
+        0 & \frac{G}{2} & \frac{G}{2} \\
+        \frac{G-C}{2} & \frac{G}{2} & \frac{G}{2}.
+    \end{pmatrix}
+\end{equation}
+
+Nuevamente planteamos la dinámica del replicador pero esta vez utilizando los valores de fitness $f_i$ y $\bar{f}$ dados por:
+\begin{itemize}
+    \item $\bar{f} = C x_H x_P - C x_H + \frac{G}{2} + x_H^2 \frac{G}{2}$
+    \item $f_H = \frac{G - C}{2} x_H + G x_P + \frac{G - C}{2} x_V$
+    \item $f_P = \frac{G}{2} x_P + \frac{G}{2} x_V$
+    \item $f_V = \frac{G - C}{2} x_H + \frac{G}{2} x_P + \frac{G}{2} x_V$.
+\end{itemize}
+
+Con estos valores y planteando que $x_V = 1 - x_H - x_P$ obtenemos el siguiente sistema de ecuaciones diferenciales:
+
+\scriptsize
+\begin{align}
+    \dot{x_H} &= x_H \left( -\frac{C}{2} x_H^2 + C x_H - C x_H x_P + \frac{G}{2} x_P + \frac{C}{2} x_P - \frac{C}{2} \right)\\
+    \dot{x_P} &= x_P x_H \left( - \frac{C}{2} x_H + C - C x_P - \frac{G}{2} \right)
+\end{align}
+
+\normalsize
+de este sistema obtenemos que los puntos de equilibrio son (0, $x_P$, $1 - x_P$), (1, 0, 0), ($\frac{G}{C}$, $1 - \frac{G}{C}$, 0).
+Analizamos la estabilidad lineal de estos puntos fijos. Evaluando la matriz jacobiana en los puntos fijos obtenemos:
+
+Para el (1, 0, 0):
+\begin{equation*}
+    J|_{(1, 0, 0)} = \begin{pmatrix}
+        0 & \frac{G - C}{2} \\
+        0 & \frac{G - C}{2}
+    \end{pmatrix},
+\end{equation*}
+
+en este caso el punto fijo es inestable si $C > G$.
+
+Para el $\left(\frac{G}{C}, 1 - \frac{G}{C}, 0\right)$
+\begin{equation*}
+    J|_{\left(\frac{G}{C}, 1 - \frac{G}{C}, 0\right)} = \begin{pmatrix}
+        0 & \frac{G}{2} \left( 1 - \frac{G}{C}\right) \\
+        \frac{G}{2} \left(\frac{G}{C} - \right) & G \left(\frac{G}{C} - 1\right)
+    \end{pmatrix},
+\end{equation*}
+en este caso el punto fijo es estable si $C > G$.
+
+Para los equilibrios $(0, x_P, 1 - x_P)$:
+\begin{equation*}
+    J|_{(0, x_P, 1 - x_P)} = \begin{pmatrix}
+        \frac{G + C}{2} x_P & 0 \\
+        x_P \left( -\frac{G}{2} + C - C x_P\right) & 0
+    \end{pmatrix},
+\end{equation*}
+esta acumulación de equilibrios es estable en el caso que $x_P < \frac{C}{G+C}$.
+
+Si ponemos valores numéricos $G = 1$ y $C = 2$ obtenemos el siguiente gráfico de las órbitas en el simplex.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{Simplex2.pdf}
+    \caption{Órbitas en el simplex del juego Halcones, Palomas y Vengativos con $G/C = 0.5$.}
+    \label{fig:Simplex2}
+\end{figure}
+
+En este caso las estrategias no convergen a un único punto en el simplex sinó que dependiendo de la población inicial
+la población tenderá a tener mitad Halcones y mitad Palomas o una mezcla entre Palomas y Vengativos donde predomina la presencia de Vengativos. 
+
+\section{Dilema del prisionero multi-jugador}
+
+Consideremos la siguiente tabla de pagos para un juego multijugador
+
+\begin{tabular}{|c|c|c|c|c|c|}
+    \hline & \multicolumn{5}{|c|}{$\mathrm{m}$} \\
+    \hline & 0 & 1 & 2 & $\ldots$ & $n-1$ \\
+    \hline $\mathrm{C}$ & $C_0$ & $C_1$ & $C_2$ & $\ldots$ & $C_{n-1}$ \\
+    \hline $\mathrm{D}$ & $D_0$ & $D_1$ & $D_2$ & $\ldots$ & $D_{n-1}$ \\
+    \hline
+\end{tabular}
+
+Siendo $C$ y $D$ cooperar y defraudar cuando compiten con $m$ cooperadores y $n - m - 1$ defraudadores. Se debe cumplir lo siguiente para que esta sea la matriz de pagos de un dilema del prisionero:
+
+En primer lugar, defraudar debe ser una estrategia superior a cooperar en cualquier situación, es decir, $D_i > C_i$ en general.
+
+Sin embargo, si todos los jugadores cooperan entre sí, esto resulta en un beneficio mayor que si todos defraudan. Por lo tanto, $C_{n-1} > D_0$. En términos generales, podemos expresar esta condición como:
+
+\begin{equation*}
+    D_{n-1} > C_{n-1} > D_{n-2} > C_{n-2} > \dots > D_0 > C_0    
+\end{equation*}
+
+
+\end{multicols}
+
+\end{document}

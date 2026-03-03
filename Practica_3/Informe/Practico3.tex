@@ -1,0 +1,124 @@
+\documentclass[spanish, 12pt, a4paper]{article}
+
+\usepackage{name}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+\setcounter{page}{1}
+\maketitle
+\begin{multicols}{2}
+
+\section{Modelo de Goodwin}
+
+Consideramos el modelo de Goodwin para la resolución de la expresión genética dado por
+
+\begin{align*}
+    \frac{d m}{d t} & =\alpha_m g_R(p)-\beta_m m, \\
+    \frac{d e}{d t} & =\alpha_e m-\beta_e e, \\
+    \frac{d p}{d t} & =\alpha_p e-\beta_p p,
+\end{align*}
+
+donde $m$ es la concentración de mARN, que produce una enzima $e$, a una tasa $\alpha_m$ y se degrada a una tasa $\beta_m$. 
+La enzima $e$ produce un producto $p$ a una tasa $\alpha_e$ y se degrada a una tasa $\beta_e$ y 
+finalmente, el producto $p$ se degrada a una tasa $\beta_p$. Además, este modelo implementa una regulación controlada por la proteína,
+con una función de la forma
+
+\begin{equation}
+    g_R(p)=\frac{a}{b+c p^h},
+\end{equation}
+
+donde $a$, $b$, $c$ son parámetros y $h$ es el exponente de Hill. Realizamos simulaciones variando el exponente de Hill 
+manteniendo los demás parámetros constantes $a = b = c = 1$, $\alpha_m = \alpha_e = \alpha_p = 1$ y $\beta_m = \beta_e = \beta_p = 0.1$.
+
+Los resultados para diferentes valores de $h$ se muestran en la Figura \ref{fig:goodwin_h}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../goodwinOscilaciones.pdf}
+    \caption{Simulación del modelo de Goodwin para distintos valores del exponente de Hill $h$.}
+    \label{fig:goodwin_h}
+\end{figure}
+
+Se observa que para $h = 1$, las concentraciones tienden a un valor constante luego de pasar por un transitorio donde
+se produce una subida y bajada de las concentraciones. 
+Para $h = 2$, tienden a un valor constante mucho más bajo realizando oscilaciones amortiguadas, mientras que para
+$h = 8$ y $h = 16$ se observan oscilaciones sostenidas en el tiempo.
+Que se observen oscilaciones para un exponente de Hill tan alto como $h = 8$ es un resultado quizás forzado, ya que en la práctica, un exponente de Hill tan alto no es algo esperado en la regulación genética.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../goodwin0.9.pdf}
+    \caption{Simulación del modelo de Goodwin para un valor de $\beta_m = \beta_e = \beta_p = 0.9$.}
+    \label{fig:goodwin_degradacion}
+\end{figure}
+
+En una situación en la que se observan oscilaciones mediante este modelo, es importante analizar qué sucede al aumentar los valores de las degradaciones $\beta_m$, $\beta_e$ y $\beta_p$.
+Por simplicidad los tomamos todos iguales. En la Figura \ref{fig:goodwin_degradacion} se observa que al haber aumentado las degradaciones con respecto al caso anterior ($\beta = 0.1$), las oscilaciones se amortiguan y tienden a desaparecer.
+
+
+\section{Switch genético}
+
+Estudiamos la dinámica de un sistema de dos genes con represión mutua dado por:
+
+\begin{align*} 
+    \frac{d m_1}{d t} & =\alpha_m g_R\left(p_2\right)-\beta_m m_1, \\ 
+    \frac{d m_2}{d t} & =\alpha_m g_R\left(p_1\right)-\beta_m m_2, \\ 
+    \frac{d p_1}{d t} & =\alpha_p m_1-\beta_p p_1, \\ 
+    \frac{d p_2}{d t} & =\alpha_p m_2-\beta_p p_2,
+\end{align*}
+
+Usando la condición de que $\beta_m \gg \beta_p$ podemos reducir el sistema a solo dos variables.
+Realizando la aproximación de esclavitúd suponemos que $m_1$ y $m_2$ se encuentran en estado estacionario, es decir, $\frac{d m_1}{d t} = \frac{d m_2}{d t} = 0$.
+De esta forma, obtenemos que
+
+\begin{align*}
+    m_1 & = \frac{\alpha_m g_R(p_2)}{\beta_m}, \\
+    m_2 & = \frac{\alpha_m g_R(p_1)}{\beta_m}.
+\end{align*}
+
+Reemplazando estas expresiones en las ecuaciones de $p_1$ y $p_2$ obtenemos
+
+\begin{align*}
+    \frac{d p_1}{d t} & = \alpha_p \frac{\alpha_m g_R(p_2)}{\beta_m} - \beta_p p_1, \\
+    \frac{d p_2}{d t} & = \alpha_p \frac{\alpha_m g_R(p_1)}{\beta_m} - \beta_p p_2.
+\end{align*}
+
+Para estudiar las bifurcaciones que ocurren en el sistema dejamos fijos los parámetros
+$\alpha_p = \alpha_m = \beta_m = 1$, $h = 2$, $a = c = 1$ y tomamos $\beta_p = 0.001$ para que se cumpla la aproximación.
+Haciendo esto nos queda $b$ como parámetro de control. En las figuras \ref{fig:switch1}, \ref{fig:switch2} y \ref{fig:switch3} se observa
+el cambio de comportamiento del sistema al variar $b$ en el diagrama de fases de las concentraciones $p_1$ y $p_2$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../switch1.pdf}
+    \caption{Diagrama de fases del sistema de dos genes con represión mutua simplificado, con $b = 40$.}
+    \label{fig:switch1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../switch2.pdf}
+    \caption{Diagrama de fases del sistema de dos genes con represión mutua simplificado, con $b = 60$.}
+    \label{fig:switch2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{../switch3.pdf}
+    \caption{Diagrama de fases del sistema de dos genes con represión mutua simplificado, con $b = 80$.}
+    \label{fig:switch3}
+\end{figure}
+
+En la Figura \ref{fig:switch1} se observa que para $b = 40$ el sistema tiene dos puntos fijos estables y uno inestable,
+esto se corresponde con el hecho de que cuando uno de los genes está activo, suprime la
+expresión del otro y viceversa.
+
+En la Figura \ref{fig:switch2} se observa que para $b = 60$ las nulclinas de $p_1$ y $p_2$ se produce aproximadamente
+la bifurcación, donde los puntos fijos estables desaparecen. Luego en la figura \ref{fig:switch3} se observa claramente el punto fijo
+estable, este se corresponde con un estado donde ambos genes están activos.
+
+
+\end{multicols}
+\end{document}
