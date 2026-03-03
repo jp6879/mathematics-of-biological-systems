@@ -1,4 +1,33 @@
+# ── Directories excluded entirely ──────────────────────────────────────
 Bibliografia/
 Trabajos prácticos/
 Notas de clase/
 .vscode/
+
+# ── Binary / large files (OneDrive cloud-only, not needed in repo) ──────
+*.pdf
+*.zip
+*.rar
+*.djvu
+*.pptx
+*.mp4
+
+# ── LaTeX build artifacts ───────────────────────────────────────────────
+*.aux
+*.bbl
+*.bcf
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+
+# ── Jupyter / Python cache ──────────────────────────────────────────────
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# ── OS / editor noise ───────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
